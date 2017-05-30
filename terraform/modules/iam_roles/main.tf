@@ -32,7 +32,7 @@ resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
 ####################
 resource "aws_iam_role" "ecs_service_role" {
   name = "${var.app_name}_ecs_service_role"
-  path = "/ecs/"
+  path = "/"
 
   assume_role_policy = <<EOF
 {
