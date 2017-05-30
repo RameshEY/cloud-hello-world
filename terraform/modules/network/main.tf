@@ -47,7 +47,7 @@ resource "aws_route" "private_nat_route" {
 }
 
 module "security_group" {
-    source = "../security_group"
+    source = "../security_groups"
 
     vpc_id                = "${module.vpc.id}"
     public_subnet_cidrs   = "${var.public_subnet_cidrs}"
