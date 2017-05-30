@@ -17,3 +17,11 @@ output "public_subnet_ids" {
 output "depends_id" {
     value = "${null_resource.dummy_dependency.id}"
 }
+
+output "sg_elb_to_app_id" {
+    value = "${module.security_groups.elb_to_app_id}"
+}
+
+output "elb_https_http_id" {
+    value = "${module.security_groups.elb_https_http_id}"
+}

@@ -46,7 +46,7 @@ resource "aws_route" "private_nat_route" {
     destination_cidr_block = "${var.destination_cidr_block}"
 }
 
-module "security_group" {
+module "security_groups" {
     source = "../security_groups"
 
     vpc_id                = "${module.vpc.id}"
