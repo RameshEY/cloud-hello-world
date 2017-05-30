@@ -28,5 +28,8 @@ variable "availibility_zones" {
 
 variable "instance_type" {}
 variable "ecs_aws_ami" {}
+variable "max_size" {}
+variable "min_size" {}
+variable "desired_capacity" {}
 
 

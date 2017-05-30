@@ -17,6 +17,26 @@ resource "aws_launch_configuration" "launch_development" {
     }
 }
 
+resource "aws_autoscaling_group" "asg_development" {
+    name                 = "asg_${var.app_name}_development"
+    max_size             = "${var.max_size}"
+    min_size             = "${var.min_size}"
+    desired_capacity     = "${var.desired_capacity}"
+    force_delete         = true
+    launch_configuration = "${aws_launch_configuration.launch_development.id}"
+    vpc_zone_identifier  = ["${var.private_subnet_ids}"]
+
+    tag {
+        key                 = "Name"
+        value               = "${var.app_name}_development"
+        propagate_at_launch = "true"
+    }
+}
+
+
 data "template_file" "user_data" {
-  template = "${file("${path.module}/templates/user_data.sh")}"
+    template = "${file("${path.module}/templates/user_data_development.sh")}"
+    vars {
+        cluster_name    = "${var.ecs_cluster_name}"
+    }
 }

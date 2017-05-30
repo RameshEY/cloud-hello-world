@@ -6,6 +6,11 @@ module "ec2" {
     ecs_aws_ami             = "${var.ecs_aws_ami}"
     security_group_id       = "${module.network.sg_elb_to_app_id}"
     iam_instance_profile    = "${module.iam_roles.ecs_instance_profile_arn}"
+    ecs_cluster_name        = "${aws_ecs_cluster.cluster_development.name}"
+    max_size                = "${var.max_size}"
+    min_size                = "${var.min_size}"
+    desired_capacity        = "${var.desired_capacity}"
+    private_subnet_ids      = "${module.network.private_subnet_ids}"
 }
 
 module "network" {

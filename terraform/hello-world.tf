@@ -12,12 +12,18 @@ module "ecs" {
     availibility_zones    = "${var.availibility_zones}"
     instance_type         = "${var.instance_type}"
     ecs_aws_ami           = "${var.ecs_aws_ami}"
+    max_size              = "${var.max_size}"
+    min_size              = "${var.min_size}"
+    desired_capacity      = "${var.desired_capacity}"
 }
 
 variable "vpc_cidr" {}
 variable "app_name" {}
 variable "instance_type" {}
 variable "ecs_aws_ami" {}
+variable "max_size" {}
+variable "min_size" {}
+variable "desired_capacity" {}
 
 variable "private_subnet_cidrs" {
   type = "list"

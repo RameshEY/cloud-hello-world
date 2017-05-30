@@ -11,3 +11,9 @@ availibility_zones = ["eu-central-1a", "eu-central-1b"]
 instance_type = "t2.micro"
 
 ecs_aws_ami = "ami-085e8a67"
+
+max_size = 3
+
+min_size = 2
+
+desired_capacity = 2
