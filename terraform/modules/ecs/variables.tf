@@ -26,3 +26,7 @@ variable "availibility_zones" {
     description = "List of avalibility zones you want. eu-central-1a and eu-central-1b"
 }
 
+variable "instance_type" {}
+variable "ecs_aws_ami" {}
+
+

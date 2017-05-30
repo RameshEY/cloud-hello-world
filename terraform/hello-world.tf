@@ -5,16 +5,19 @@ provider "aws" {
 module "ecs" {
     source = "modules/ecs"
 
-    app_name                = "${var.app_name}"
-    vpc_cidr                = "${var.vpc_cidr}"
-    public_subnet_cidrs     = "${var.public_subnet_cidrs}"
-    private_subnet_cidrs    = "${var.private_subnet_cidrs}"
-    availibility_zones      = "${var.availibility_zones}"
+    app_name              = "${var.app_name}"
+    vpc_cidr              = "${var.vpc_cidr}"
+    public_subnet_cidrs   = "${var.public_subnet_cidrs}"
+    private_subnet_cidrs  = "${var.private_subnet_cidrs}"
+    availibility_zones    = "${var.availibility_zones}"
+    instance_type         = "${var.instance_type}"
+    ecs_aws_ami           = "${var.ecs_aws_ami}"
 }
 
 variable "vpc_cidr" {}
-
 variable "app_name" {}
+variable "instance_type" {}
+variable "ecs_aws_ami" {}
 
 variable "private_subnet_cidrs" {
   type = "list"
