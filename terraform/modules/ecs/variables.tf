@@ -25,3 +25,4 @@ variable "availibility_zones" {
     type        = "list"
     description = "List of avalibility zones you want. eu-central-1a and eu-central-1b"
 }
+
