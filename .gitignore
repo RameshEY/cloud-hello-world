@@ -22,4 +22,4 @@
 hs_err_pid*
 
 .terraform
-terraform.tfstate.backup
+terraform.tfstate*
