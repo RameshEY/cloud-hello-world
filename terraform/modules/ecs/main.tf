@@ -65,8 +65,8 @@ resource "aws_ecs_task_definition" "hello" {
   {
     "cpu": 128,
     "environment": [{
-      "name": "SECRET",
-      "value": "KEY"
+      "name": "ENV",
+      "value": "development"
     }],
     "portMappings": [
         {
@@ -76,7 +76,7 @@ resource "aws_ecs_task_definition" "hello" {
         }
       ],
     "essential": true,
-    "image": "gazgeek/springboot-helloworld",
+    "image": "156161676080.dkr.ecr.eu-central-1.amazonaws.com/hello-world",
     "memory": 256,
     "name": "development"
   }
