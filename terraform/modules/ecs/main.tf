@@ -32,10 +32,11 @@ module "iam_roles" {
 module "alb" {
     source = "../alb"
 
+    route53_name            = "${var.route53_name}"
     vpc_id                  = "${module.network.vpc_id}"
     app_name                = "${var.app_name}"
     security_group_id       = "${module.network.elb_https_http_id}"
-    public_subnet_ids      = "${module.network.public_subnet_ids}"
+    public_subnet_ids       = "${module.network.public_subnet_ids}"
 }
 
 resource "aws_ecs_cluster" "cluster_development" {
@@ -75,7 +76,7 @@ resource "aws_ecs_task_definition" "hello" {
       ],
     "essential": true,
     "image": "gazgeek/springboot-helloworld",
-    "memory": 1024,
+    "memory": 256,
     "name": "development"
   }
 ]
@@ -89,7 +90,8 @@ resource "aws_ecs_service" "development" {
   iam_role      = "arn:aws:iam::156161676080:role/hello-world_ecs_service_role"
 
   load_balancer {
-      target_group_arn  = "${aws_alb_target_group.test.name}"
+      #TODO
+      target_group_arn  = "${aws_alb_target_group.test.arn}"
       container_name    = "development"
       container_port    = 8080
   }
@@ -103,4 +105,20 @@ resource "aws_alb_target_group" "test" {
   port     = 8080
   protocol = "HTTP"
   vpc_id   = "${module.network.vpc_id}"
+}
+
+resource "aws_alb_listener_rule" "host_based_routing" {
+#TODO
+listener_arn = "arn:aws:elasticloadbalancing:eu-central-1:156161676080:listener/app/elb-hello-world/18525c6419a49dc8/adc496dd58beddd6"
+  priority     = 99
+
+  action {
+    type             = "forward"
+    target_group_arn = "${aws_alb_target_group.test.arn}"
+  }
+
+  condition {
+    field  = "host-header"
+    values = ["development.mvlbarcelos.com"]
+  }
 }

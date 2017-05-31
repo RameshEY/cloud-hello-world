@@ -33,7 +33,6 @@ resource "aws_autoscaling_group" "asg_development" {
     }
 }
 
-
 data "template_file" "user_data" {
     template = "${file("${path.module}/templates/user_data_development.sh")}"
     vars {
