@@ -1,5 +1,7 @@
 vpc_cidr = "172.16.0.0/16"
 
+route53_name = "mvlbarcelos.com"
+
 app_name = "hello-world"
 
 public_subnet_cidrs = ["172.16.0.0/24", "172.16.1.0/24"]

@@ -2,6 +2,8 @@ variable "app_name" {
     description = "The name of the application"
 }
 
+variable "route53_name" {}
+
 variable "deregistration_delay" {
   default     = "300"
   description = "The default deregistration delay"

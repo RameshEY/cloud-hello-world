@@ -15,6 +15,7 @@ module "ecs" {
     max_size              = "${var.max_size}"
     min_size              = "${var.min_size}"
     desired_capacity      = "${var.desired_capacity}"
+    route53_name          = "${var.route53_name}"
 }
 
 variable "vpc_cidr" {}
@@ -24,6 +25,7 @@ variable "ecs_aws_ami" {}
 variable "max_size" {}
 variable "min_size" {}
 variable "desired_capacity" {}
+variable "route53_name" {}
 
 variable "private_subnet_cidrs" {
   type = "list"
