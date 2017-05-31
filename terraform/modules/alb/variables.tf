@@ -5,7 +5,7 @@ variable "app_name" {
 variable "route53_name" {}
 
 variable "deregistration_delay" {
-  default     = "300"
+  default     = "60"
   description = "The default deregistration delay"
 }
 
@@ -21,3 +21,5 @@ variable "public_subnet_ids" {
   type        = "list"
   description = "The list of public subnets to place the instances in"
 }
+
+variable "certificate_arn" {}

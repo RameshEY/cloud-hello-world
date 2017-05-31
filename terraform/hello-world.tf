@@ -16,6 +16,7 @@ module "ecs" {
     min_size              = "${var.min_size}"
     desired_capacity      = "${var.desired_capacity}"
     route53_name          = "${var.route53_name}"
+    certificate_arn       = "${var.certificate_arn}"
 }
 
 variable "vpc_cidr" {}
@@ -26,6 +27,7 @@ variable "max_size" {}
 variable "min_size" {}
 variable "desired_capacity" {}
 variable "route53_name" {}
+variable "certificate_arn" {}
 
 variable "private_subnet_cidrs" {
   type = "list"

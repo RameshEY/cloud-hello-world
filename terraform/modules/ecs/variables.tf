@@ -32,5 +32,6 @@ variable "max_size" {}
 variable "min_size" {}
 variable "desired_capacity" {}
 variable "route53_name" {}
+variable "certificate_arn" {}
 
 

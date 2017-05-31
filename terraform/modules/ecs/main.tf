@@ -37,6 +37,7 @@ module "alb" {
     app_name                = "${var.app_name}"
     security_group_id       = "${module.network.elb_https_http_id}"
     public_subnet_ids       = "${module.network.public_subnet_ids}"
+    certificate_arn         = "${var.certificate_arn}"
 }
 
 resource "aws_ecs_cluster" "cluster_development" {
@@ -87,11 +88,10 @@ resource "aws_ecs_service" "development" {
   name          = "development"
   cluster       = "${aws_ecs_cluster.cluster_development.id}"
   desired_count = 2
-  iam_role      = "arn:aws:iam::156161676080:role/hello-world_ecs_service_role"
+  iam_role      = "${module.iam_roles.ecs_service_role_arn}"
 
   load_balancer {
-      #TODO
-      target_group_arn  = "${aws_alb_target_group.test.arn}"
+      target_group_arn  = "${aws_alb_target_group.development.arn}"
       container_name    = "development"
       container_port    = 8080
   }
@@ -100,25 +100,24 @@ resource "aws_ecs_service" "development" {
   task_definition = "${aws_ecs_task_definition.hello.family}:${max("${aws_ecs_task_definition.hello.revision}", "${data.aws_ecs_task_definition.hello.revision}")}"
 }
 
-resource "aws_alb_target_group" "test" {
-  name     = "tf-example-ecs-ghost"
+resource "aws_alb_target_group" "development" {
+  name     = "tg-${var.app_name}-development"
   port     = 8080
   protocol = "HTTP"
   vpc_id   = "${module.network.vpc_id}"
 }
 
 resource "aws_alb_listener_rule" "host_based_routing" {
-#TODO
-listener_arn = "arn:aws:elasticloadbalancing:eu-central-1:156161676080:listener/app/elb-hello-world/18525c6419a49dc8/adc496dd58beddd6"
-  priority     = 99
-
-  action {
-    type             = "forward"
-    target_group_arn = "${aws_alb_target_group.test.arn}"
-  }
-
-  condition {
-    field  = "host-header"
-    values = ["development.mvlbarcelos.com"]
-  }
+  listener_arn = "${module.alb.alb_listener_arn}"
+    priority     = 99
+  
+    action {
+      type             = "forward"
+      target_group_arn = "${aws_alb_target_group.development.arn}"
+    }
+  
+    condition {
+      field  = "host-header"
+      values = ["development.mvlbarcelos.com"]
+    }
 }
