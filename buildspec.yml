@@ -4,3 +4,4 @@ phases:
   build:
     commands:
       - mvn clean package
+      - docker build -t hello-world .
