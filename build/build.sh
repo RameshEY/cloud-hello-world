@@ -1,7 +1,9 @@
 #!/bin/bash
 
 tag=$(git describe --abbrev=0 --tags)
-sed -i '' 's/{RELEASE}/${tag}/g' ../src/main/resources/application-*
+sed -i 's/{RELEASE}/${tag}/g' ../src/main/resources/application-development.properties
+sed -i 's/{RELEASE}/${tag}/g' ../src/main/resources/application-test.properties
+sed -i 's/{RELEASE}/${tag}/g' ../src/main/resources/application-production.properties
 mvn package
 
 docker build -f build/Dockerfile -t hello-world:$tag .
