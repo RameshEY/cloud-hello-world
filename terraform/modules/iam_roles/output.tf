@@ -6,3 +6,8 @@ output "ecs_service_role_arn" {
     value = "${aws_iam_role.ecs_service_role.arn}"
 }
 
+output "codebuild_role_arn" {
+    value = "${aws_iam_role.codebuild_role.arn}"
+}
+
+

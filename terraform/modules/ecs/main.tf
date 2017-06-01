@@ -25,8 +25,8 @@ module "network" {
 
 module "iam_roles" {
     source = "../iam_roles"
-
-    app_name                = "${var.app_name}"
+    
+    app_name    = "${var.app_name}"
 }
 
 module "alb" {
@@ -38,6 +38,13 @@ module "alb" {
     security_group_id       = "${module.network.elb_https_http_id}"
     public_subnet_ids       = "${module.network.public_subnet_ids}"
     certificate_arn         = "${var.certificate_arn}"
+}
+
+module "code_build" {
+    source = "../code_build"
+
+    iam_role    = "${module.iam_roles.codebuild_role_arn}"
+    app_name              = "${var.app_name}"
 }
 
 resource "aws_ecs_cluster" "cluster_development" {
