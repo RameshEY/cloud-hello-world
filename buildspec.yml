@@ -3,8 +3,9 @@ version: 0.1
 phases:
   install:
     commands:
-      - yum install -y docker
+      - chmod +x codebuild_install.sh
+      - ./codebuild_install.sh
   build:
     commands:
-      - mvn clean package
-      - docker build -t hello-world .
+      - chmod +x build.sh
+      - ./build.sh
