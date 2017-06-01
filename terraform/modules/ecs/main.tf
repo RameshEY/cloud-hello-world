@@ -105,6 +105,7 @@ resource "aws_alb_target_group" "development" {
   port     = 8080
   protocol = "HTTP"
   vpc_id   = "${module.network.vpc_id}"
+  deregistration_delay = 60
 }
 
 resource "aws_alb_listener_rule" "host_based_routing" {
