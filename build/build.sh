@@ -1,7 +1,9 @@
 #!/bin/bash
 
-mvn package
 tag=$(git describe --abbrev=0 --tags)
+sed -i '' 's/{RELEASE}/${tag}/g' src/main/resources/application-*
+mvn package
+
 docker build -f build/Dockerfile -t hello-world:$tag .
 
 $(aws ecr get-login --region eu-central-1)
