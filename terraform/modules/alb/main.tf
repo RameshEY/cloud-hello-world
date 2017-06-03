@@ -1,7 +1,7 @@
 # Default ALB implementation that can be used connect ECS instances to it
 
 resource "aws_alb_target_group" "default" {
-  name                 = "tg-${var.app_name}-default"
+  name                 = "tg-${var.app_name}-df-${var.enviroment}"
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = "${var.vpc_id}"
@@ -14,7 +14,7 @@ resource "aws_alb_target_group" "default" {
 }
 
 resource "aws_alb" "alb" {
-  name            = "elb-${var.app_name}"
+  name            = "elb-${var.app_name}-${var.enviroment}"
   subnets         = ["${var.public_subnet_ids}"]
   security_groups = ["${var.security_group_id}"]
 
@@ -33,31 +33,14 @@ resource "aws_alb_listener" "https" {
   }
 }
 
-
 data "aws_route53_zone" "selected" {
   name         = "${var.route53_name}"
   private_zone = false
 }
 
-resource "aws_route53_record" "development" {
+resource "aws_route53_record" "record" {
     zone_id = "${data.aws_route53_zone.selected.zone_id}"
-    name    = "development.${data.aws_route53_zone.selected.name}"
-    type    = "CNAME"
-    ttl     = "300"
-    records = ["${aws_alb.alb.dns_name}"]
-}
-
-resource "aws_route53_record" "test" {
-    zone_id = "${data.aws_route53_zone.selected.zone_id}"
-    name    = "test.${data.aws_route53_zone.selected.name}"
-    type    = "CNAME"
-    ttl     = "300"
-    records = ["${aws_alb.alb.dns_name}"]
-}
-
-resource "aws_route53_record" "production" {
-    zone_id = "${data.aws_route53_zone.selected.zone_id}"
-    name    = "production.${data.aws_route53_zone.selected.name}"
+    name    = "${var.enviroment}.${data.aws_route53_zone.selected.name}"
     type    = "CNAME"
     ttl     = "300"
     records = ["${aws_alb.alb.dns_name}"]

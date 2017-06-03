@@ -1,7 +1,5 @@
-#http://docs.aws.amazon.com/AmazonECS/latest/developerguide/IAM_policies.html
-
 resource "aws_iam_role" "ecs_instance_role" {
-  name = "${var.app_name}_ecs_instance_role"
+  name = "${var.app_name}-ecs-instance-role-${var.enviroment}"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +18,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "ecs" {
-  name = "${var.app_name}_ecs_instance_profile"
+  name = "${var.app_name}-ecs-instance-profile-${var.enviroment}"
   path = "/"
   role = "${aws_iam_role.ecs_instance_role.name}"
 }
@@ -31,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
 }
 ####################
 resource "aws_iam_role" "ecs_service_role" {
-  name = "${var.app_name}_ecs_service_role"
+  name = "${var.app_name}-ecs-service-role-${var.enviroment}"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -58,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "ecs_service" {
 ####################
 
 resource "aws_iam_role" "ecs_default_task_role" {
-  name = "${var.app_name}_ecs_default_task"
+  name = "${var.app_name}_ecs-default-task-${var.enviroment}"
   path = "/ecs/"
 
   assume_role_policy = <<EOF

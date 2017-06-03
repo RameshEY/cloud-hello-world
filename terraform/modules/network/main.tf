@@ -1,14 +1,15 @@
 module "vpc" {
     source = "../vpc"
 
-    cidr          = "${var.vpc_cidr}"
-    app_name      = "${var.app_name}"
+    cidr       = "${var.vpc_cidr}"
+    app_name   = "${var.app_name}"
+    enviroment = "${var.enviroment}"
 }
 
 module "private_subnet" {
     source = "../subnet"
 
-    name                = "${var.app_name}_private_subnet"
+    name                = "${var.app_name}-private-subnet-${var.enviroment}"
     app_name            = "${var.app_name}"
     vpc_id              = "${module.vpc.id}"
     cidrs               = "${var.private_subnet_cidrs}"
@@ -18,7 +19,7 @@ module "private_subnet" {
 module "public_subnet" {
     source = "../subnet"
 
-    name                = "${var.app_name}_public_subnet"
+    name                = "${var.app_name}-public-subnet-${var.enviroment}"
     app_name            = "${var.app_name}"
     vpc_id              = "${module.vpc.id}"
     cidrs               = "${var.public_subnet_cidrs}"
@@ -50,9 +51,6 @@ module "security_groups" {
     source = "../security_groups"
 
     vpc_id                = "${module.vpc.id}"
+    enviroment            = "${var.enviroment}"
     public_subnet_cidrs   = "${var.public_subnet_cidrs}"
-}
-
-resource "null_resource" "dummy_dependency" {
-    depends_on = ["module.nat"]
 }
