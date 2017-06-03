@@ -35,13 +35,15 @@ module "network" {
 module "alb" {
     source = "../alb"
 
-    environment              = "${var.environment}"
+    environment             = "${var.environment}"
     app_name                = "${var.app_name}"
     route53_name            = "${var.route53_name}"
     vpc_id                  = "${module.network.vpc_id}"
     security_group_id       = "${module.network.elb_https_http_id}"
     public_subnet_ids       = "${module.network.public_subnet_ids}"
     certificate_arn         = "${var.certificate_arn}"
+    deregistration_delay    = "${var.deregistration_delay}"
+    health_check_path       = "${var.health_check_path}"
 }
 
 
@@ -98,7 +100,12 @@ resource "aws_alb_target_group" "target_group" {
     port     = 8080
     protocol = "HTTP"
     vpc_id   = "${module.network.vpc_id}"
-    deregistration_delay = 60
+    deregistration_delay = "${var.deregistration_delay}"
+
+    health_check {
+        path     = "${var.health_check_path}"
+        protocol = "HTTP"
+    }
 }
 
 resource "aws_alb_listener_rule" "host_based_routing" {

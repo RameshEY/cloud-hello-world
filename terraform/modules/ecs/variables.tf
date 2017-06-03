@@ -9,6 +9,14 @@ variable "route53_name" {}
 variable "certificate_arn" {}
 variable "environment" {}
 
+variable "deregistration_delay" {
+  default     = "60"
+}
+
+variable "health_check_path" {
+  default     = "/health"
+}
+
 variable "destination_cidr_block" {
     default     = "0.0.0.0/0"
 }
