@@ -93,6 +93,9 @@ resource "aws_ecs_service" "service" {
 
     task_definition = "${aws_ecs_task_definition.hello.family}:${aws_ecs_task_definition.hello.revision}"
 
+    lifecycle {
+        ignore_changes = ["task_definition"]
+    }
 }
 
 resource "aws_alb_target_group" "target_group" {
