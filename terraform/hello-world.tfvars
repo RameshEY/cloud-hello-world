@@ -21,3 +21,5 @@ min_size = 2
 desired_capacity = 2
 
 certificate_arn = "arn:aws:acm:eu-central-1:156161676080:certificate/92ce5ffd-b075-477d-bd58-6547237de699"
+
+ecr_image = "156161676080.dkr.ecr.eu-central-1.amazonaws.com/hello-world"

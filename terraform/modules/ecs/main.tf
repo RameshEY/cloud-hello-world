@@ -71,7 +71,7 @@ resource "aws_ecs_task_definition" "hello" {
         }
       ],
     "essential": true,
-    "image": "156161676080.dkr.ecr.eu-central-1.amazonaws.com/hello-world",
+    "image": "${var.ecr_image}",
     "memory": 256,
     "name": "${var.environment}"
   }
@@ -108,6 +108,10 @@ resource "aws_alb_target_group" "target_group" {
     health_check {
         path     = "${var.health_check_path}"
         protocol = "HTTP"
+    }
+
+    tags {
+        ELB      = "${module.alb.alb_name}"
     }
 }
 

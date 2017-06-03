@@ -8,6 +8,7 @@ variable "desired_capacity" {}
 variable "route53_name" {}
 variable "certificate_arn" {}
 variable "environment" {}
+variable "ecr_image" {}
 
 variable "deregistration_delay" {
   default     = "60"

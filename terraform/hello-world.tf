@@ -18,6 +18,7 @@ module "ecs_development" {
     desired_capacity      = "${var.desired_capacity}"
     route53_name          = "${var.route53_name}"
     certificate_arn       = "${var.certificate_arn}"
+    ecr_image             = "${var.ecr_image}"
 }
 
 module "ecs_test" {
@@ -36,6 +37,7 @@ module "ecs_test" {
     desired_capacity      = "${var.desired_capacity}"
     route53_name          = "${var.route53_name}"
     certificate_arn       = "${var.certificate_arn}"
+    ecr_image             = "${var.ecr_image}"
 }
 
 module "ecs_production" {
@@ -54,6 +56,7 @@ module "ecs_production" {
     desired_capacity      = "${var.desired_capacity}"
     route53_name          = "${var.route53_name}"
     certificate_arn       = "${var.certificate_arn}"
+    ecr_image             = "${var.ecr_image}"
 }
 
 variable "vpc_cidr" {}
@@ -65,7 +68,7 @@ variable "min_size" {}
 variable "desired_capacity" {}
 variable "route53_name" {}
 variable "certificate_arn" {}
-
+variable "ecr_image" {}
 variable "private_subnet_cidrs" {
   type = "list"
 }
