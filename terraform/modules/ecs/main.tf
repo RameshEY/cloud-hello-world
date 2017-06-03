@@ -2,14 +2,14 @@ module "iam_roles" {
     source = "../iam_roles"
     
     app_name                = "${var.app_name}"
-    enviroment              = "${var.enviroment}"
+    environment              = "${var.environment}"
 }
 
 module "ec2" {
     source = "../ec2"
     
     app_name                = "${var.app_name}"
-    enviroment              = "${var.enviroment}"
+    environment              = "${var.environment}"
     instance_type           = "${var.instance_type}"
     ecs_aws_ami             = "${var.ecs_aws_ami}"
     security_group_id       = "${module.network.sg_elb_to_app_id}"
@@ -25,7 +25,7 @@ module "network" {
     source = "../network"
 
     app_name                = "${var.app_name}"
-    enviroment              = "${var.enviroment}"
+    environment              = "${var.environment}"
     vpc_cidr                = "${var.vpc_cidr}"
     public_subnet_cidrs     = "${var.public_subnet_cidrs}"
     private_subnet_cidrs    = "${var.private_subnet_cidrs}"
@@ -35,7 +35,7 @@ module "network" {
 module "alb" {
     source = "../alb"
 
-    enviroment              = "${var.enviroment}"
+    environment              = "${var.environment}"
     app_name                = "${var.app_name}"
     route53_name            = "${var.route53_name}"
     vpc_id                  = "${module.network.vpc_id}"
@@ -47,11 +47,11 @@ module "alb" {
 
 
 resource "aws_ecs_cluster" "cluster" {
-    name = "${var.app_name}-${var.enviroment}"
+    name = "${var.app_name}-${var.environment}"
 }
 
 resource "aws_ecs_task_definition" "hello" {
-    family = "${var.enviroment}"
+    family = "${var.environment}"
 
     container_definitions = <<DEFINITION
 [
@@ -59,7 +59,7 @@ resource "aws_ecs_task_definition" "hello" {
     "cpu": 128,
     "environment": [{
       "name": "ENV",
-      "value": "${var.enviroment}"
+      "value": "${var.environment}"
     }],
     "portMappings": [
         {
@@ -71,21 +71,21 @@ resource "aws_ecs_task_definition" "hello" {
     "essential": true,
     "image": "156161676080.dkr.ecr.eu-central-1.amazonaws.com/hello-world",
     "memory": 256,
-    "name": "${var.enviroment}"
+    "name": "${var.environment}"
   }
 ]
 DEFINITION
 }
 
 resource "aws_ecs_service" "service" {
-    name          = "${var.enviroment}"
+    name          = "${var.environment}"
     cluster       = "${aws_ecs_cluster.cluster.id}"
     desired_count = 2
     iam_role      = "${module.iam_roles.ecs_service_role_arn}"
 
   load_balancer {
         target_group_arn  = "${aws_alb_target_group.target_group.arn}"
-        container_name    = "${var.enviroment}"
+        container_name    = "${var.environment}"
         container_port    = 8080
   }
 
@@ -94,7 +94,7 @@ resource "aws_ecs_service" "service" {
 }
 
 resource "aws_alb_target_group" "target_group" {
-    name     = "tg-${var.app_name}-${var.enviroment}"
+    name     = "tg-${var.app_name}-${var.environment}"
     port     = 8080
     protocol = "HTTP"
     vpc_id   = "${module.network.vpc_id}"
@@ -112,6 +112,6 @@ resource "aws_alb_listener_rule" "host_based_routing" {
     
         condition {
             field  = "host-header"
-            values = ["${var.enviroment}.mvlbarcelos.com"]
+            values = ["${var.environment}.mvlbarcelos.com"]
         }
 }

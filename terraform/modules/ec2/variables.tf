@@ -7,7 +7,7 @@ variable "ecs_cluster_name" {}
 variable "max_size" {}
 variable "min_size" {}
 variable "desired_capacity" {}
-variable "enviroment" {}
+variable "environment" {}
 
 variable "private_subnet_ids" {
   type        = "list"

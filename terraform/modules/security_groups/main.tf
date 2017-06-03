@@ -1,5 +1,5 @@
 resource "aws_security_group" "allow_elb_https_http" {
-    name        = "allow-https-http-${var.enviroment}"
+    name        = "allow-https-http-${var.environment}"
     description = "Allow https and http inbound traffic"
     vpc_id      = "${var.vpc_id}"
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "allow_elb_https_http" {
 }
 
 resource "aws_security_group" "allow_elb_to_app" {
-    name        = "allow-elb-to-app-${var.enviroment}"
+    name        = "allow-elb-to-app-${var.environment}"
     description = "Allow elb to app"
     vpc_id      = "${var.vpc_id}"
 

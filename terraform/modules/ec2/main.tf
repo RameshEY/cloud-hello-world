@@ -1,10 +1,10 @@
 resource "aws_key_pair" "hello" {
-    key_name   = "key-${var.app_name}-${var.enviroment}"
+    key_name   = "key-${var.app_name}-${var.environment}"
     public_key = "${data.template_file.ssh_pub_key.rendered}"
 }
 
 resource "aws_launch_configuration" "launch" {
-    name_prefix             = "lc_${var.app_name}-${var.enviroment}"
+    name_prefix             = "lc_${var.app_name}-${var.environment}"
     image_id                = "${var.ecs_aws_ami}"  
     instance_type           = "${var.instance_type}"  
     security_groups         = ["${var.security_group_id}"]
@@ -18,7 +18,7 @@ resource "aws_launch_configuration" "launch" {
 }
 
 resource "aws_autoscaling_group" "asg" {
-    name                 = "asg_${var.app_name}-${var.enviroment}"
+    name                 = "asg_${var.app_name}-${var.environment}"
     max_size             = "${var.max_size}"
     min_size             = "${var.min_size}"
     desired_capacity     = "${var.desired_capacity}"
@@ -28,13 +28,13 @@ resource "aws_autoscaling_group" "asg" {
 
     tag {
         key                 = "Name"
-        value               = "${var.app_name}-${var.enviroment}"
+        value               = "${var.app_name}-${var.environment}"
         propagate_at_launch = "true"
     }
 }
 
 data "template_file" "ssh_pub_key" {
-    template = "${file("${path.module}/templates/id_rsa_${var.enviroment}.pub")}"
+    template = "${file("${path.module}/templates/id_rsa_${var.environment}.pub")}"
 }
 
 data "template_file" "user_data" {

@@ -3,13 +3,13 @@ module "vpc" {
 
     cidr       = "${var.vpc_cidr}"
     app_name   = "${var.app_name}"
-    enviroment = "${var.enviroment}"
+    environment = "${var.environment}"
 }
 
 module "private_subnet" {
     source = "../subnet"
 
-    name                = "${var.app_name}-private-subnet-${var.enviroment}"
+    name                = "${var.app_name}-private-subnet-${var.environment}"
     app_name            = "${var.app_name}"
     vpc_id              = "${module.vpc.id}"
     cidrs               = "${var.private_subnet_cidrs}"
@@ -19,7 +19,7 @@ module "private_subnet" {
 module "public_subnet" {
     source = "../subnet"
 
-    name                = "${var.app_name}-public-subnet-${var.enviroment}"
+    name                = "${var.app_name}-public-subnet-${var.environment}"
     app_name            = "${var.app_name}"
     vpc_id              = "${module.vpc.id}"
     cidrs               = "${var.public_subnet_cidrs}"
@@ -51,6 +51,6 @@ module "security_groups" {
     source = "../security_groups"
 
     vpc_id                = "${module.vpc.id}"
-    enviroment            = "${var.enviroment}"
+    environment            = "${var.environment}"
     public_subnet_cidrs   = "${var.public_subnet_cidrs}"
 }

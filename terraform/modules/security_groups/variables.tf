@@ -1,5 +1,5 @@
 variable "vpc_id" {}
-variable "enviroment" {}
+variable "environment" {}
 
 variable "public_subnet_cidrs" {
     type        = "list"

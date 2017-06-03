@@ -5,7 +5,7 @@ provider "aws" {
 module "ecs_development" {
     source = "modules/ecs"
 
-    enviroment            = "development"
+    environment            = "development"
     app_name              = "${var.app_name}"
     vpc_cidr              = "${var.vpc_cidr}"
     public_subnet_cidrs   = "${var.public_subnet_cidrs}"
@@ -23,7 +23,7 @@ module "ecs_development" {
 module "ecs_test" {
     source = "modules/ecs"
 
-    enviroment            = "test"
+    environment            = "test"
     app_name              = "${var.app_name}"
     vpc_cidr              = "${var.vpc_cidr}"
     public_subnet_cidrs   = "${var.public_subnet_cidrs}"
@@ -41,7 +41,7 @@ module "ecs_test" {
 module "ecs_production" {
     source = "modules/ecs"
 
-    enviroment            = "production"
+    environment            = "production"
     app_name              = "${var.app_name}"
     vpc_cidr              = "${var.vpc_cidr}"
     public_subnet_cidrs   = "${var.public_subnet_cidrs}"

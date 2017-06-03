@@ -1,7 +1,7 @@
 # Default ALB implementation that can be used connect ECS instances to it
 
 resource "aws_alb_target_group" "default" {
-  name                 = "tg-${var.app_name}-df-${var.enviroment}"
+  name                 = "tg-${var.app_name}-df-${var.environment}"
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = "${var.vpc_id}"
@@ -14,7 +14,7 @@ resource "aws_alb_target_group" "default" {
 }
 
 resource "aws_alb" "alb" {
-  name            = "elb-${var.app_name}-${var.enviroment}"
+  name            = "elb-${var.app_name}-${var.environment}"
   subnets         = ["${var.public_subnet_ids}"]
   security_groups = ["${var.security_group_id}"]
 
@@ -40,7 +40,7 @@ data "aws_route53_zone" "selected" {
 
 resource "aws_route53_record" "record" {
     zone_id = "${data.aws_route53_zone.selected.zone_id}"
-    name    = "${var.enviroment}.${data.aws_route53_zone.selected.name}"
+    name    = "${var.environment}.${data.aws_route53_zone.selected.name}"
     type    = "CNAME"
     ttl     = "300"
     records = ["${aws_alb.alb.dns_name}"]

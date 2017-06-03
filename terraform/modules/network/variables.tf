@@ -1,5 +1,5 @@
 variable "vpc_cidr" {}
-variable "enviroment" {}
+variable "environment" {}
 variable "app_name" {}
 
 variable "destination_cidr_block" {

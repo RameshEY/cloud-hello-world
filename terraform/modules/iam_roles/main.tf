@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_instance_role" {
-  name = "${var.app_name}-ecs-instance-role-${var.enviroment}"
+  name = "${var.app_name}-ecs-instance-role-${var.environment}"
 
   assume_role_policy = <<EOF
 {
@@ -18,7 +18,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "ecs" {
-  name = "${var.app_name}-ecs-instance-profile-${var.enviroment}"
+  name = "${var.app_name}-ecs-instance-profile-${var.environment}"
   path = "/"
   role = "${aws_iam_role.ecs_instance_role.name}"
 }
@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
 }
 ####################
 resource "aws_iam_role" "ecs_service_role" {
-  name = "${var.app_name}-ecs-service-role-${var.enviroment}"
+  name = "${var.app_name}-ecs-service-role-${var.environment}"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "ecs_service" {
 ####################
 
 resource "aws_iam_role" "ecs_default_task_role" {
-  name = "${var.app_name}_ecs-default-task-${var.enviroment}"
+  name = "${var.app_name}_ecs-default-task-${var.environment}"
   path = "/ecs/"
 
   assume_role_policy = <<EOF

@@ -7,7 +7,7 @@ variable "min_size" {}
 variable "desired_capacity" {}
 variable "route53_name" {}
 variable "certificate_arn" {}
-variable "enviroment" {}
+variable "environment" {}
 
 variable "destination_cidr_block" {
     default     = "0.0.0.0/0"

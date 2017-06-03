@@ -1,5 +1,5 @@
 variable "app_name" {}
-variable "enviroment" {}
+variable "environment" {}
 variable "route53_name" {}
 variable "vpc_id" {}
 variable "security_group_id" {}
