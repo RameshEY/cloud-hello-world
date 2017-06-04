@@ -6,6 +6,7 @@ variable "security_group_id" {}
 variable "certificate_arn" {}
 variable "deregistration_delay" {}
 variable "health_check_path" {}
+variable "bucket_log" {}
 
 variable "public_subnet_ids" {
   type        = "list"

@@ -19,6 +19,7 @@ module "ecs_development" {
     route53_name          = "${var.route53_name}"
     certificate_arn       = "${var.certificate_arn}"
     ecr_image             = "${var.ecr_image}"
+    bucket_log            = "${var.bucket_log}"
 }
 
 module "ecs_test" {
@@ -38,6 +39,7 @@ module "ecs_test" {
     route53_name          = "${var.route53_name}"
     certificate_arn       = "${var.certificate_arn}"
     ecr_image             = "${var.ecr_image}"
+    bucket_log            = "${var.bucket_log}"
 }
 
 module "ecs_production" {
@@ -57,6 +59,7 @@ module "ecs_production" {
     route53_name          = "${var.route53_name}"
     certificate_arn       = "${var.certificate_arn}"
     ecr_image             = "${var.ecr_image}"
+    bucket_log            = "${var.bucket_log}"
 }
 
 variable "vpc_cidr" {}
@@ -69,6 +72,7 @@ variable "desired_capacity" {}
 variable "route53_name" {}
 variable "certificate_arn" {}
 variable "ecr_image" {}
+variable "bucket_log" {}
 variable "private_subnet_cidrs" {
   type = "list"
 }

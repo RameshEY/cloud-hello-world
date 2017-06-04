@@ -18,6 +18,11 @@ resource "aws_alb" "alb" {
   subnets         = ["${var.public_subnet_ids}"]
   security_groups = ["${var.security_group_id}"]
 
+  access_logs {
+    bucket = "${var.bucket_log}"
+    prefix = "alb-${var.environment}"
+  }
+
 }
 
 resource "aws_alb_listener" "https" {

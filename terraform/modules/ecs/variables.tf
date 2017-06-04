@@ -9,6 +9,7 @@ variable "route53_name" {}
 variable "certificate_arn" {}
 variable "environment" {}
 variable "ecr_image" {}
+variable "bucket_log" {}
 
 variable "deregistration_delay" {
   default     = "60"

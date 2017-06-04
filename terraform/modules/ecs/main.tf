@@ -1,7 +1,7 @@
 module "iam_roles" {
     source = "../iam_roles"
     
-    app_name                = "${var.app_name}"
+    app_name                 = "${var.app_name}"
     environment              = "${var.environment}"
 }
 
@@ -9,7 +9,7 @@ module "ec2" {
     source = "../ec2"
     
     app_name                = "${var.app_name}"
-    environment              = "${var.environment}"
+    environment             = "${var.environment}"
     instance_type           = "${var.instance_type}"
     ecs_aws_ami             = "${var.ecs_aws_ami}"
     security_group_id       = "${module.network.sg_elb_to_app_id}"
@@ -25,7 +25,7 @@ module "network" {
     source = "../network"
 
     app_name                = "${var.app_name}"
-    environment              = "${var.environment}"
+    environment             = "${var.environment}"
     vpc_cidr                = "${var.vpc_cidr}"
     public_subnet_cidrs     = "${var.public_subnet_cidrs}"
     private_subnet_cidrs    = "${var.private_subnet_cidrs}"
@@ -44,6 +44,7 @@ module "alb" {
     certificate_arn         = "${var.certificate_arn}"
     deregistration_delay    = "${var.deregistration_delay}"
     health_check_path       = "${var.health_check_path}"
+    bucket_log              = "${var.bucket_log}"
 }
 
 
